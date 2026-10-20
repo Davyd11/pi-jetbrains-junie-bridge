@@ -1,8 +1,12 @@
 {
   "name": "pi-jetbrains-junie-bridge",
   "version": "1.4.0",
-  "description": "Pi extension that connects Pi coding agent with JetBrains Junie as the AI backend",
+  "description": "Pi extension and OpenCode plugin that use JetBrains Junie as the AI backend",
   "type": "module",
+  "exports": {
+    "./server": "./opencode.mjs",
+    "./package.json": "./package.json"
+  },
   "pi": {
     "extensions": [
       "./index.ts"
@@ -11,6 +15,8 @@
   "keywords": [
     "pi",
     "pi-package",
+    "opencode",
+    "opencode-plugin",
     "junie",
     "jetbrains",
     "coding-agent",
@@ -31,6 +37,7 @@
   },
   "files": [
     "index.ts",
+    "opencode.mjs",
     "lib/",
     "docs/",
     "README.md"

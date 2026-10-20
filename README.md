@@ -1,8 +1,8 @@
 # pi-jetbrains-junie-bridge
 
-A [Pi](https://pi.dev/) extension that lets you use [JetBrains Junie](https://junie.jetbrains.com/) as the AI backend for the Pi coding agent — using your existing Junie subscription.
+A [Pi](https://pi.dev/) extension and [OpenCode](https://opencode.ai/) plugin that lets you use [JetBrains Junie](https://junie.jetbrains.com/) as the AI backend — using your existing Junie subscription.
 
-## Install
+## Install (Pi)
 
 ```bash
 pi install npm:pi-jetbrains-junie-bridge
@@ -11,6 +11,35 @@ pi install npm:pi-jetbrains-junie-bridge
 Then inside `pi` run the `/login` command.  Select `Use a subscription` and then `JetBrains Junie` to authenticate.
 
 Once authenticated, run `/model` to select a model provided by the junie bridge.
+
+## Install (OpenCode 2)
+
+The plugin targets the OpenCode 2 plugin API (`opencode2`). Add it to your global configuration:
+
+```bash
+opencode2 plugin add pi-jetbrains-junie-bridge
+```
+
+or reference a local checkout in `opencode.json`:
+
+```json
+{
+  "plugins": ["/absolute/path/to/pi-jetbrains-junie-bridge/opencode.mjs"]
+}
+```
+
+Then log in — this opens the JetBrains login in your browser:
+
+```bash
+opencode2 auth login junie
+```
+
+The models appear under the `junie` provider, e.g. `junie/claude-opus-5` or
+`junie/openai-gpt-5-5`. Reasoning effort is exposed as model variants
+(`junie/claude-opus-5#high`, `junie/openai-gpt-5-5#xhigh`, `junie/gemini-3.5-flash#low`).
+OpenCode stores the credential and refreshes the token automatically.
+
+Not available in OpenCode (yet): the balance status line and the `/junie` command — both rely on Pi's TUI APIs.
 
 ## Features
 
@@ -96,17 +125,17 @@ You can verify the active proxy with the `/junie` command inside Pi.
 The extension starts a local proxy server that translates between Pi and JetBrains' Grazie backend. On first use, you'll authenticate via JetBrains OAuth (browser-based PKCE flow).
 
 ```
-┌─────────┐     ┌──────────────┐     ┌──────────────┐
-│   Pi    │────>│  pi-junie    │────>│ Junie/Grazie │
-│ agent   │     │  local proxy │     │   backend    │
-└─────────┘     └──────────────┘     └──────────────┘
+┌──────────┐     ┌──────────────┐     ┌──────────────┐
+│ Pi /     │────>│  pi-junie    │────>│ Junie/Grazie │
+│ OpenCode │     │  local proxy │     │   backend    │
+└──────────┘     └──────────────┘     └──────────────┘
 ```
 
 - OpenAI models (`openai-gpt-*`) are forwarded via `/v1/responses` (OpenAI Responses API) so reasoning effort works together with tool calls
 - Anthropic models (`claude-*`) are forwarded via `/v1/messages`
 - Grok models (`grok-*`) use the same Responses API, with the routing header that Junie uses for xAI
 - Gemini models (`gemini-*`) are forwarded to the Vertex-style `generateContent` endpoint
-- The proxy runs on an ephemeral port and shuts down when Pi exits
+- The proxy runs on an ephemeral port and shuts down when Pi exits (or when OpenCode unloads the plugin)
 
 ## Disclaimer
 
