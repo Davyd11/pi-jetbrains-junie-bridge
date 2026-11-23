@@ -121,11 +121,16 @@ export default {
         const meta = getModelMeta(id);
 
         draft.model.update(PROVIDER_ID, id, (model) => {
+          const variants = structuredClone(family.variants);
+          if (id === "gemini-4-hydrogen" || id === "gemini-4-neon") {
+            variants.push({ id: "xhigh", settings: { thinkingConfig: { includeThoughts: true, thinkingLevel: "xhigh" } } });
+          }
+
           model.name = `${id} (Junie)`;
           model.package = family.package;
           model.settings = { ...model.settings, baseURL: `${proxyBase}${family.path}` };
           model.capabilities = { tools: true, input: ["text", "image"], output: ["text"] };
-          model.variants = meta.reasoning ? structuredClone(family.variants) : [];
+          model.variants = meta.reasoning ? variants : [];
           // Usage is billed against the Junie subscription, not per token
           model.cost = [];
           model.limit = { context: meta.contextWindow, output: meta.maxTokens };

@@ -69,6 +69,10 @@ The list below is mostly in sync with the models Junie itself offers, as publish
 - `claude-opus-5`
 - `claude-fable-5`
 - `claude-fable-5-1`
+- `claude-fable-5-2`
+- `claude-haiku-5-5`
+- `claude-sonnet-5-5`
+- `claude-opus-5-5`
 
 **OpenAI:**
 - `openai-gpt-5-2`
@@ -78,11 +82,18 @@ The list below is mostly in sync with the models Junie itself offers, as publish
 - `openai-gpt-5-6-terra`
 - `openai-gpt-5-6-sol`
 - `openai-gpt-6-astra`
+- `openai-gpt-6-luna`
+- `openai-gpt-6-sol`
+- `openai-gpt-6-1-sol`
+- `openai-gpt-6-1-terra`
+- `openai-gpt-6-2-astra`
+- `openai-gpt-6-2-sol`
 
 **xAI:**
 - `grok-4-3`
 - `grok-4-5`
 - `grok-4-6`
+- `grok-4-7`
 
 **Google:**
 - `gemini-3-flash-preview`
@@ -93,13 +104,17 @@ The list below is mostly in sync with the models Junie itself offers, as publish
 - `gemini-3.6-flash`
 - `gemini-3.7-flash`
 - `gemini-3.8-flash`
+- `gemini-4-argon`
+- `gemini-4-carbon`
+- `gemini-4-hydrogen`
+- `gemini-4-neon`
 
 Missing models:
 - **`deepseek-v4-flash`** — not implemented yet. JetBrains routes DeepSeek through a different backend (AliCloud), and every path/header combination tried so far is rejected by the Grazie gateway for subscription OAuth tokens.
 - **`kimi-k2.5`, `muse-spark-1.x`** — listed on llm24.net but gated to internal/EAP licences; every route tried answers 400/404.
 - **`gemini-3-pro-preview`** — in the Junie JAR, but the Google publisher 404s it (not live).
 - **Older OpenAI generations** (`gpt-5-2025-08-07`, `gpt-5.3-codex`) — reachable, but deliberately left out in favour of the current GPT-5 models.
-- **`gpt`, `grok`, `gemini-pro`, `gemini-flash`** — stale aliases in that list; the backend answers `Model not found` for them.
+- **`gpt`, `gpt-astra`, `gpt-luna`, `gpt-sol`, `gpt-terra`, `grok`, `gemini-pro`, `gemini-flash`** — aliases are deliberately omitted in favour of versioned model IDs.
 
 ## Proxy Support
 
@@ -118,6 +133,7 @@ You can verify the active proxy with the `/junie` command inside Pi.
 
 - Node.js 20+
 - A [JetBrains Junie subscription](https://junie.jetbrains.com/)
+- Pi 1.3+ when using Gemini 4 models
 
 
 ## How It Works
